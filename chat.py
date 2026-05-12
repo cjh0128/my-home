@@ -1,32 +1,11 @@
 import streamlit as st
-
-from volcenginesdkarkruntime import Ark
+from translate import Translator
 st.title("我的小小ai")
+text = st.text_area("输入要翻译的中文：", "你好，Streamlit！")
+target_lang = st.selectbox("目标语言", ["英语", "日语", "韩语"])
 
-
-
-# 初始化聊天记录
-if "messages" not in st.session_state:
-    st.session_state.messages = []
-
-# 显示历史消息
-for message in st.session_state.messages:
-    with st.chat_message(message["role"]):
-        st.markdown(message["content"])
-
-# 接收用户提问
-if prompt := st.chat_input("有什么可以帮你的？"):
-    st.session_state.messages.append({"role": "user", "content": prompt})
-    with st.chat_message("user"):
-        st.markdown(prompt)
-
-    # 调用AI接口生成回复
-    with st.chat_message("assistant"):
-        with st.spinner("正在思考..."):
-            response = client.chat.completions.create(
-                model="doubao-lite-4k",  # 选免费的模型就行
-                messages=st.session_state.messages
-            )
-            reply = response.choices[0].message.content
-            st.markdown(reply)
-    st.session_state.messages.append({"role": "assistant", "content": reply})
+lang_map = {"英语": "en", "日语": "ja", "韩语": "ko"}
+if st.button("翻译"):
+    translator = Translator(to_lang=lang_map[target_lang])
+    result = translator.translate(text)
+    st.success(f"翻译结果：{result}")
