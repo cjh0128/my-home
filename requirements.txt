@@ -1,1 +1,4 @@
-streamlit
+streastreamlit
+pandas
+matplotlib
+openpyxlmlit
