@@ -1,6 +1,6 @@
 import streamlit as st
 
-st.title("我的第一个聊天机器人")
+st.title("我的小小ai")
 
 # 初始化聊天记录
 if "messages" not in st.session_state:
